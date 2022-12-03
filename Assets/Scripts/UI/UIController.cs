@@ -1,37 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 
 public class UIController : MonoBehaviour {
-    public SliderController spawnIntervalSlider;
-    public SliderController speedSlider;
-    public SliderController lifespanSlider;
-
+    public Button toggleShortcutsOverlay;
     public XFormController xFormController;
 
-    public LayerMask selectableLayer;
-
-    public Material materialForSelected;
-
     public GameObject root;
+    public GameObject shortcutsOverlay;
 
     private GameObject _selectedObject;
     private Material _selectedObjectPreviousMaterial;
 
     void Start() {
-        spawnIntervalSlider.slider.onValueChanged.AddListener(value => updateLinesFromSliders());
-        speedSlider.slider.onValueChanged.AddListener(value => updateLinesFromSliders());
-        lifespanSlider.slider.onValueChanged.AddListener(value => updateLinesFromSliders());
+        // spawnIntervalSlider.slider.onValueChanged.AddListener(value => updateLinesFromSliders());
+        // speedSlider.slider.onValueChanged.AddListener(value => updateLinesFromSliders());
+        // lifespanSlider.slider.onValueChanged.AddListener(value => updateLinesFromSliders());
+
+        toggleShortcutsOverlay.onClick.AddListener(ToggleShortcutsOverlay);
     }
 
-    private void updateLinesFromSliders() {
-        AimLine[] aimlines = GameObject.FindObjectsOfType<AimLine>();
-        foreach (AimLine aimline in aimlines) {
-            aimline.spawnInterval = spawnIntervalSlider.slider.value;
-            aimline.ballSpeed = speedSlider.slider.value;
-            aimline.ballLifespan = Mathf.FloorToInt(lifespanSlider.slider.value);
-        }
+    void ToggleShortcutsOverlay() {
+        shortcutsOverlay.SetActive(!shortcutsOverlay.activeSelf);
     }
 }
