@@ -7,7 +7,6 @@ public class XFormController : MonoBehaviour {
     public TMPro.TMP_Text header;
 
     public Toggle translationToggle;
-    public Toggle scaleToggle;
     public Toggle rotationToggle;
 
     public SliderController xSlider;
@@ -16,11 +15,10 @@ public class XFormController : MonoBehaviour {
 
     private GameObject _selectedObject;
 
-    public enum TransformType { Translation, Scale, Rotation };
+    public enum TransformType { Translation, Rotation };
     private TransformType _currentTransformType;
 
     public Vector2 translationMinMax = new Vector2(-10, 10);
-    public Vector2 scaleMinMax = new Vector2(1, 5);
     public Vector2 rotationMinMax = new Vector2(-180, 180);
 
     void Start() {
@@ -37,10 +35,6 @@ public class XFormController : MonoBehaviour {
         translationToggle.onValueChanged.AddListener((enabled) => {
             if (!enabled) return;
             SetTransformType(TransformType.Translation);
-        });
-        scaleToggle.onValueChanged.AddListener((enabled) => {
-            if (!enabled) return;
-            SetTransformType(TransformType.Scale);
         });
         rotationToggle.onValueChanged.AddListener((enabled) => {
             if (!enabled) return;
@@ -98,9 +92,6 @@ public class XFormController : MonoBehaviour {
             case (TransformType.Translation):
                 SetSliders(_selectedObject.transform.localPosition);
                 break;
-            case (TransformType.Scale):
-                SetSliders(_selectedObject.transform.localScale);
-                break;
             case (TransformType.Rotation):
                 // Special case for rotation
                 // Reference: https://answers.unity.com/questions/554743/how-to-calculate-transformlocaleuleranglesx-as-neg.html
@@ -124,10 +115,6 @@ public class XFormController : MonoBehaviour {
                 SetSliderMinMaxes(translationMinMax);
                 translationToggle.SetIsOnWithoutNotify(true);
                 break;
-            case (TransformType.Scale):
-                SetSliderMinMaxes(scaleMinMax);
-                scaleToggle.SetIsOnWithoutNotify(true);
-                break;
             case (TransformType.Rotation):
                 SetSliderMinMaxes(rotationMinMax);
                 rotationToggle.SetIsOnWithoutNotify(true);
@@ -142,9 +129,6 @@ public class XFormController : MonoBehaviour {
         switch (transformType) {
             case (TransformType.Translation):
                 _selectedObject.transform.localPosition = sliderVector;
-                break;
-            case (TransformType.Scale):
-                _selectedObject.transform.localScale = sliderVector;
                 break;
             case (TransformType.Rotation):
                 // Special case for rotation
