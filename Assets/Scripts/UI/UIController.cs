@@ -43,6 +43,6 @@ public class UIController : MonoBehaviour {
     }
 
     private void SpawnScoreChangePopup(int value) {
-        // todo...
+        // todo: have a (+20, +40, -10, etc) popup float up above score and disappear
     }
 }

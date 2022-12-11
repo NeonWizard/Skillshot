@@ -18,6 +18,7 @@ public class RoundManager : MonoBehaviour {
     public float TimeLeft { get; private set; }
     public bool RoundOver { get; private set; }
     public int CurrentRound { get; private set; }
+    public int RingsHit { get; private set; }
 
     [Header("Objects")]
     public UIController HUD;
@@ -30,6 +31,12 @@ public class RoundManager : MonoBehaviour {
     [Header("Variables")]
     public int roundTime = 30;
     public BoxCollider ringSpawnArea;
+    public int basePointsPerRing = 10;
+
+    [Header("Sounds")]
+    public AudioClip scorePoints;
+    public AudioClip gameOver; // todo
+    public AudioClip roundOver; // todo
 
     private List<GameObject> rings = new List<GameObject>();
 
@@ -110,6 +117,16 @@ public class RoundManager : MonoBehaviour {
 
             rings.Add(ring);
         }
+    }
+
+    // Called whenever a ring is hit
+    public void RingHit() {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.pitch = 1f + 0.1f * RingsHit;
+        audioSource.PlayOneShot(scorePoints);
+
+        Score += basePointsPerRing + (int)Mathf.Pow(2, RingsHit);
+        RingsHit++;
     }
 
     // todo: move to a utils static singleton or something
