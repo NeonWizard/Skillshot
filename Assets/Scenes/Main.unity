@@ -2124,7 +2124,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e6434c80fd9342c48b51ffaec63a08c6, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 0.9
   Loop: 1
@@ -6205,6 +6205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HUD: {fileID: 581751558}
   overlayController: {fileID: 1537061058}
+  backgroundMusic: {fileID: 571433138}
   roundTime: 20
 --- !u!4 &973285457
 Transform:
@@ -7635,6 +7636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1317869995}
   - component: {fileID: 1317869996}
+  - component: {fileID: 1317869997}
   m_Layer: 5
   m_Name: Toggle
   m_TagString: Untagged
@@ -7709,20 +7711,21 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 571433138}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: set_mute
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_IsOn: 0
+      m_Calls: []
+  m_IsOn: 1
+--- !u!114 &1317869997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317869994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df721a1c4a624d44dad4e0a3030be8c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundMusic: {fileID: 571433138}
 --- !u!1 &1327432283
 GameObject:
   m_ObjectHideFlags: 0

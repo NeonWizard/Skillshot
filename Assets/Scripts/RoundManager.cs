@@ -22,6 +22,7 @@ public class RoundManager : MonoBehaviour {
     [Header("Objects")]
     public UIController HUD;
     public OverlayController overlayController;
+    public AudioSource backgroundMusic;
 
     [Header("Variables")]
     public int roundTime = 30;
@@ -61,6 +62,11 @@ public class RoundManager : MonoBehaviour {
     }
 
     public void StartRound() {
+        // Start background music when first round starts
+        if (CurrentRound == 1) {
+            backgroundMusic.Play();
+        }
+
         Score = 0;
 
         SpawnRings();
