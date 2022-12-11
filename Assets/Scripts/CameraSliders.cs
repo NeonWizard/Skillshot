@@ -13,8 +13,10 @@ public class CameraSliders : MonoBehaviour {
     void Start() {
         xSlider.slider.minValue = -5f;
         xSlider.slider.maxValue = 5f;
+
         ySlider.slider.minValue = -5f;
         ySlider.slider.maxValue = 5f;
+
         zSlider.slider.minValue = -5f;
         zSlider.slider.maxValue = 5f;
 
@@ -24,22 +26,12 @@ public class CameraSliders : MonoBehaviour {
 
         startPos = camera.transform.position;
 
-        xSlider.slider.onValueChanged.AddListener((value) => MoveCamera(value, 0));
-        ySlider.slider.onValueChanged.AddListener((value) => MoveCamera(value, 1));
-        zSlider.slider.onValueChanged.AddListener((value) => MoveCamera(value, 2));
+        xSlider.slider.onValueChanged.AddListener((val) => UpdateCamera());
+        ySlider.slider.onValueChanged.AddListener((val) => UpdateCamera());
+        zSlider.slider.onValueChanged.AddListener((val) => UpdateCamera());
     }
 
-    void MoveCamera(float value, int axis) {
-        switch (axis) {
-            case (0):
-                camera.transform.position = startPos + new Vector3(value, 0, 0);
-                break;
-            case (1):
-                camera.transform.position = startPos + new Vector3(0, value, 0);
-                break;
-            case (2):
-                camera.transform.position = startPos + new Vector3(0, 0, value);
-                break;
-        }
+    void UpdateCamera() {
+        camera.transform.position = new Vector3(xSlider.slider.value, ySlider.slider.value, zSlider.slider.value) + startPos;
     }
 }
