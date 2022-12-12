@@ -79,6 +79,7 @@ public class RoundManager : MonoBehaviour {
         if (CurrentRound == 1) {
             backgroundMusic.Play();
         }
+        DeleteAllBalls();
 
         Score = 0;
 
@@ -138,5 +139,12 @@ public class RoundManager : MonoBehaviour {
             Random.Range(-extents.z, extents.z)
         );
         return point;
+    }
+
+    public void DeleteAllBalls() {
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("CrushableBalls");
+        foreach (GameObject ball in balls) {
+            Destroy(ball);
+        }
     }
 }
