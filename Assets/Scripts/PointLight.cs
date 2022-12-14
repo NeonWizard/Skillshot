@@ -11,14 +11,13 @@ public class PointLight : MonoBehaviour {
     public GameObject n, f;
     public bool ShowLightRanges = false;
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         GetComponent<Renderer>().material.color = LightColor;
         n.SetActive(ShowLightRanges);
         f.SetActive(ShowLightRanges);
@@ -26,17 +25,16 @@ public class PointLight : MonoBehaviour {
         Color c = LightColor;
         c.a = 0.2f;
         n.transform.localPosition = transform.localPosition;
-        n.transform.localScale = new Vector3(2*Near, 2*Near, 2*Near);
+        n.transform.localScale = new Vector3(2 * Near, 2 * Near, 2 * Near);
         n.GetComponent<Renderer>().material.color = c;
 
         c.a = 0.1f;
         f.transform.localPosition = transform.localPosition;
-        f.transform.localScale = new Vector3(2*Far, 2*Far, 2*Far);
+        f.transform.localScale = new Vector3(2 * Far, 2 * Far, 2 * Far);
         f.GetComponent<Renderer>().material.color = c;
     }
 
-    public void LoadLightToShader()
-    {
+    public void LoadLightToShader() {
         Shader.SetGlobalVector("LightPosition", transform.localPosition);
         Shader.SetGlobalColor("LightColor", LightColor);
         Shader.SetGlobalFloat("LightNear", Near);
