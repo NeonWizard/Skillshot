@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LoadLight : MonoBehaviour {
-    public Transform LightPosition;
+    public PointLight Light;
 
-	void Update()
-    {
-        Shader.SetGlobalVector("LightPosition", LightPosition.localPosition);
+    void Update() {
+        Light.LoadLightToShader();
     }
 }

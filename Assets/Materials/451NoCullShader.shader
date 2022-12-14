@@ -40,7 +40,6 @@
 			float4x4 MyTRSMatrix; // use our own TRSMatrix
 			fixed4 MyColor;
 
-			// test
 			float4 LightPosition;
 			fixed4 LightColor;
 			float  LightNear;
@@ -92,7 +91,7 @@
 				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv);
 				float diff = ComputeDiffuse(i);
-				col += MyColor;
+				// col += MyColor;
 				return col * diff * LightColor;
 			}
 			ENDCG
