@@ -30,7 +30,7 @@ public class RobotArm : MonoBehaviour {
         GameObject exp = GameObject.Instantiate(explosion);
 
         // set transform
-        ball.transform.position = cannon.transform.position + cannon.transform.forward * 1f;
+        ball.transform.position = cannon.transform.position + cannon.transform.forward * 0.5f;
         ball.transform.rotation = cannon.transform.rotation;
 
         // set explosion transform
@@ -48,7 +48,7 @@ public class RobotArm : MonoBehaviour {
 
         float elapsed = 0.0f;
 
-        while (elapsed<duraction) {
+        while (elapsed < duraction) {
             float x = Random.Range(-.5f, .5f) * magnitude;
             float y = Random.Range(-.5f, .5f) * magnitude;
 
@@ -56,7 +56,7 @@ public class RobotArm : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
-        
+
         Camera.main.transform.localPosition = originalPos;
     }
 }
