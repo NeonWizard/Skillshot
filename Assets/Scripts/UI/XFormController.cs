@@ -23,7 +23,7 @@ public class XFormController : MonoBehaviour {
 
     void Start() {
         // Default transform type to Translation
-        SetTransformType(TransformType.Translation);
+        SetTransformType(TransformType.Rotation);
 
         // Reset sliders
         SetSliders(Vector3.zero);
@@ -159,7 +159,7 @@ public class XFormController : MonoBehaviour {
         SetHeaderSelectedName(obj?.name ?? "None");
 
         // Reset checkboxes
-        SetTransformType(TransformType.Translation);
+        SetTransformType(TransformType.Rotation);
 
         // Store newly selected object (or null)
         _selectedObject = obj;
