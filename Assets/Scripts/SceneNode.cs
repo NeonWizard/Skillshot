@@ -11,8 +11,9 @@ public class SceneNode : MonoBehaviour {
     public Vector3 Pivot;
     private Vector3 _pivot;
 
-    [Header("Primitives")]
+    [Header("Composition")]
     public List<NodePrimitive> PrimitiveList;
+    public List<TrackingObject> TrackingObjects;
 
     [Header("Settings")]
     public bool Controllable;
@@ -72,6 +73,13 @@ public class SceneNode : MonoBehaviour {
         // disenminate to primitives
         foreach (NodePrimitive prim in PrimitiveList) {
             prim.LoadShaderMatrix(ref mCombinedParentXform);
+        }
+
+        // make objects track position of SceneNode
+        foreach (TrackingObject to in TrackingObjects) {
+            to.transform.position = _pivot;
+            to.transform.localPosition += to.offset;
+            to.transform.rotation = Quaternion.LookRotation(mCombinedParentXform.GetColumn(2), mCombinedParentXform.GetColumn(1));
         }
     }
 }
