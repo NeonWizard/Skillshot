@@ -7,7 +7,6 @@ public class SceneNodeController : MonoBehaviour {
     public Dropdown TheMenu = null;
     public SceneNode TheRoot = null;
     public XFormController XformControl = null;
-    //public Transform SelectedObjAxisFrame = null; //not used in this project
     public Camera MainCamera = null;
     private SceneNode previousSceneNode = null;
 
@@ -15,11 +14,9 @@ public class SceneNodeController : MonoBehaviour {
     List<Dropdown.OptionData> mSelectMenuOptions = new List<Dropdown.OptionData>();
 
     List<Transform> mSelectedTransform = new List<Transform>();
-    float rSpeed = 10f / 6;
-    float Direction = 1f;
-    private float nextActionTime = 0.0f;
-    public float period = 2f;
-    private bool first = true;
+
+    public int selectedIndex;
+    public float rotationSpeed;
 
     void Start() {
         TheMenu.ClearOptions();
@@ -31,6 +28,45 @@ public class SceneNodeController : MonoBehaviour {
         TheMenu.onValueChanged.AddListener(SelectionChange);
 
         SelectionChange(0);
+    }
+
+    void Update() {
+        // -- Switching joints
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            SelectionChange(mod(selectedIndex - 1, mSelectedTransform.Count));
+        } else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+            SelectionChange(mod(selectedIndex + 1, mSelectedTransform.Count));
+        }
+
+        // -- Controlling joints
+        Quaternion rotation = Quaternion.identity;
+        Transform selected = mSelectedTransform[selectedIndex].gameObject.transform;
+        // Up/down (x-axis) (W/S)
+        if (Input.GetKey(KeyCode.W)) {
+            rotation = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, selected.right);
+        }
+        if (Input.GetKey(KeyCode.S)) {
+            rotation = Quaternion.AngleAxis(-rotationSpeed * Time.deltaTime, selected.right);
+        }
+
+        // Left/right (y-axis) (A/D)
+        if (Input.GetKey(KeyCode.A)) {
+            rotation = Quaternion.AngleAxis(-rotationSpeed * Time.deltaTime, selected.up);
+        }
+        if (Input.GetKey(KeyCode.D)) {
+            rotation = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, selected.up);
+        }
+
+        // Roll (z-axis) (Q/E)
+        if (Input.GetKey(KeyCode.Q)) {
+            rotation = Quaternion.AngleAxis(rotationSpeed * Time.deltaTime, selected.forward);
+        }
+        if (Input.GetKey(KeyCode.E)) {
+            rotation = Quaternion.AngleAxis(-rotationSpeed * Time.deltaTime, selected.forward);
+        }
+
+        Quaternion myRotation = selected.rotation;
+        selected.rotation *= (Quaternion.Inverse(myRotation) * rotation * myRotation);
     }
 
     void GetChildrenNames(string blanks, Transform node) {
@@ -54,5 +90,13 @@ public class SceneNodeController : MonoBehaviour {
         XformControl.SetSelectedObject(mSelectedTransform[index].gameObject);
         SceneNode cn = mSelectedTransform[index].GetComponent<SceneNode>();
         previousSceneNode = cn;
+        selectedIndex = index;
+        TheMenu.SetValueWithoutNotify(selectedIndex);
+    }
+
+    // why must i suffer
+    // https://stackoverflow.com/questions/1082917/mod-of-negative-number-is-melting-my-brain
+    int mod(int x, int m) {
+        return (x % m + m) % m;
     }
 }
