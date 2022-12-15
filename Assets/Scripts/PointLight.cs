@@ -18,7 +18,7 @@ public class PointLight : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        GetComponent<Renderer>().sharedMaterial.color = LightColor;
+        GetComponent<Renderer>().material.color = LightColor;
         n.SetActive(ShowLightRanges);
         f.SetActive(ShowLightRanges);
 
@@ -26,12 +26,12 @@ public class PointLight : MonoBehaviour {
         c.a = 0.2f;
         n.transform.localPosition = transform.localPosition;
         n.transform.localScale = new Vector3(2 * Near, 2 * Near, 2 * Near);
-        n.GetComponent<Renderer>().sharedMaterial.color = c;
+        n.GetComponent<Renderer>().material.color = c;
 
         c.a = 0.1f;
         f.transform.localPosition = transform.localPosition;
         f.transform.localScale = new Vector3(2 * Far, 2 * Far, 2 * Far);
-        f.GetComponent<Renderer>().sharedMaterial.color = c;
+        f.GetComponent<Renderer>().material.color = c;
     }
 
     public void LoadLightToShader() {
