@@ -19,7 +19,7 @@ public class RobotArm : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            Fire(50f);
+            Fire(ballFireVelocity.y);
             StartCoroutine(Shake(.15f, .4f));
         }
     }
