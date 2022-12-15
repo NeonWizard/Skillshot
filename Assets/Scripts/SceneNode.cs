@@ -6,11 +6,16 @@ using System.Collections.Generic;
 public class SceneNode : MonoBehaviour {
     protected Matrix4x4 mCombinedParentXform;
 
+    [Header("Positions")]
     public Vector3 NodeOrigin = Vector3.zero;
     public Vector3 Pivot;
     private Vector3 _pivot;
 
+    [Header("Primitives")]
     public List<NodePrimitive> PrimitiveList;
+
+    [Header("Settings")]
+    public bool Controllable;
 
     private Vector3 initialOrigin;
     private Quaternion initialRotation;

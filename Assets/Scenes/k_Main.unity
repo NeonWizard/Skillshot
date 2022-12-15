@@ -1456,6 +1456,7 @@ MonoBehaviour:
   Pivot: {x: 0, y: 0, z: 6}
   PrimitiveList:
   - {fileID: 1020664220099885148}
+  Controllable: 1
 --- !u!1 &252493076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2928,6 +2929,7 @@ MonoBehaviour:
   Pivot: {x: 0, y: 0, z: 0.72}
   PrimitiveList:
   - {fileID: 3118954857376148990}
+  Controllable: 1
 --- !u!1 &427520554
 GameObject:
   m_ObjectHideFlags: 0
@@ -11235,6 +11237,7 @@ MonoBehaviour:
   Pivot: {x: 0, y: 0, z: 3.04}
   PrimitiveList:
   - {fileID: 1115568261955916102}
+  Controllable: 1
 --- !u!1 &1406628412
 GameObject:
   m_ObjectHideFlags: 0
@@ -12029,6 +12032,7 @@ MonoBehaviour:
   Pivot: {x: 0, y: 0, z: 6.75}
   PrimitiveList:
   - {fileID: 8936695403076863551}
+  Controllable: 0
 --- !u!1 &1508195504
 GameObject:
   m_ObjectHideFlags: 0
@@ -12399,6 +12403,7 @@ MonoBehaviour:
   Pivot: {x: 0, y: 0, z: 0.18}
   PrimitiveList:
   - {fileID: 8032985795453793610}
+  Controllable: 0
 --- !u!1 &1570802484
 GameObject:
   m_ObjectHideFlags: 0
@@ -13779,6 +13784,7 @@ MonoBehaviour:
   Pivot: {x: 0, y: 0, z: 6.9}
   PrimitiveList:
   - {fileID: 5233112404705565194}
+  Controllable: 0
 --- !u!1 &1836582187
 GameObject:
   m_ObjectHideFlags: 0
@@ -15115,6 +15121,7 @@ MonoBehaviour:
   Pivot: {x: 0, y: 0, z: 0}
   PrimitiveList:
   - {fileID: 6089873161467939030}
+  Controllable: 0
 --- !u!1 &1020664220099885146
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class XFormController : MonoBehaviour {
     public Vector2 translationMinMax = new Vector2(-10, 10);
     public Vector2 rotationMinMax = new Vector2(-180, 180);
 
-    void Start() {
+    void Awake() {
         // Default transform type to Translation
         SetTransformType(TransformType.Rotation);
 

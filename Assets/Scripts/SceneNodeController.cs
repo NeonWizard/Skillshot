@@ -15,8 +15,6 @@ public class SceneNodeController : MonoBehaviour {
     List<Dropdown.OptionData> mSelectMenuOptions = new List<Dropdown.OptionData>();
 
     List<Transform> mSelectedTransform = new List<Transform>();
-    List<Transform> mDecorationTransforms = new List<Transform>();
-    List<Vector3> mOrigionalDecorationRotations = new List<Vector3>();
     float rSpeed = 10f / 6;
     float Direction = 1f;
     private float nextActionTime = 0.0f;
@@ -26,29 +24,13 @@ public class SceneNodeController : MonoBehaviour {
     void Start() {
         TheMenu.ClearOptions();
 
-        mSelectMenuOptions.Add(new Dropdown.OptionData(TheRoot.transform.name));
-        mSelectedTransform.Add(TheRoot.transform);
+        // mSelectMenuOptions.Add(new Dropdown.OptionData(TheRoot.transform.name));
+        // mSelectedTransform.Add(TheRoot.transform);
         GetChildrenNames("", TheRoot.transform);
         TheMenu.AddOptions(mSelectMenuOptions);
         TheMenu.onValueChanged.AddListener(SelectionChange);
 
-        XformControl.SetSelectedObject(TheRoot.gameObject);
-        SceneNode cn = TheRoot.GetComponent<SceneNode>();
-        previousSceneNode = cn;
-    }
-
-    void Update() {
-        for (int j = mDecorationTransforms.Count - 1; j >= 0; j--) {
-            if (Time.time > nextActionTime) {
-                nextActionTime += period;
-                Direction *= -1f;
-            }
-
-            // rotate object
-            Vector3 newRot = mDecorationTransforms[j].eulerAngles;
-            newRot.z += rSpeed * Direction;
-            mDecorationTransforms[j].eulerAngles = newRot;
-        }
+        SelectionChange(0);
     }
 
     void GetChildrenNames(string blanks, Transform node) {
@@ -57,19 +39,12 @@ public class SceneNodeController : MonoBehaviour {
             Transform child = node.GetChild(i);
             SceneNode cn = child.GetComponent<SceneNode>();
             if (cn != null) {
-                if (child.name != "LeftDecor-Node" && child.name != "RightDecor-Node" && child.name != "TopDecor-Node") {
+                if (cn.Controllable) {
                     mSelectMenuOptions.Add(new Dropdown.OptionData(space + child.name));
                     mSelectedTransform.Add(child);
                     GetChildrenNames(blanks + kChildSpace, child);
-                }
-                if (child.name == "LeftDecor-Node" || child.name == "RightDecor-Node" || child.name == "TopDecor-Node") // CHANGE TO ELSE ???
-                {
-                    NodePrimitive np = cn.PrimitiveList[0].GetComponent<NodePrimitive>();
-                    Transform decor_transform = np.gameObject.transform;
-
-                    mDecorationTransforms.Add(decor_transform);
-                    mOrigionalDecorationRotations.Add(decor_transform.eulerAngles);
-
+                } else {
+                    GetChildrenNames(blanks, child);
                 }
             }
         }
@@ -79,6 +54,5 @@ public class SceneNodeController : MonoBehaviour {
         XformControl.SetSelectedObject(mSelectedTransform[index].gameObject);
         SceneNode cn = mSelectedTransform[index].GetComponent<SceneNode>();
         previousSceneNode = cn;
-
     }
 }
