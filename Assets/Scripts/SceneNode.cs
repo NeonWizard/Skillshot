@@ -2,10 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[ExecuteInEditMode]
 public class SceneNode : MonoBehaviour {
     protected Matrix4x4 mCombinedParentXform;
 
     public Vector3 NodeOrigin = Vector3.zero;
+    public Vector3 Pivot;
+    private Vector3 _pivot;
+
     public List<NodePrimitive> PrimitiveList;
 
     private Vector3 initialOrigin;
@@ -14,9 +18,13 @@ public class SceneNode : MonoBehaviour {
     // Use this for initialization
     protected void Start() {
         InitializeSceneNode();
-        // Debug.Log("PrimitiveList:" + PrimitiveList.Count);
         initialOrigin = NodeOrigin;
         initialRotation = transform.localRotation;
+    }
+
+    void OnDrawGizmosSelected() {
+        // For helping with pivot placement
+        // Gizmos.DrawCube(_pivot, new Vector3(0.22f, 0.22f, 0.22f));
     }
 
     private void InitializeSceneNode() {
@@ -41,9 +49,12 @@ public class SceneNode : MonoBehaviour {
     // This must be called _BEFORE_ each draw!!
     public void CompositeXform(ref Matrix4x4 parentXform) {
         Matrix4x4 orgT = Matrix4x4.Translate(NodeOrigin);
+        Matrix4x4 p = Matrix4x4.TRS(Pivot, Quaternion.identity, Vector3.one);
+        Matrix4x4 invp = Matrix4x4.TRS(-Pivot, Quaternion.identity, Vector3.one);
         Matrix4x4 trs = Matrix4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale);
 
-        mCombinedParentXform = parentXform * orgT * trs;
+        mCombinedParentXform = parentXform * orgT * p * trs * invp;
+        _pivot = mCombinedParentXform.MultiplyPoint(Pivot);
 
         // propagate to all children
         foreach (Transform child in transform) {
@@ -54,8 +65,8 @@ public class SceneNode : MonoBehaviour {
         }
 
         // disenminate to primitives
-        foreach (NodePrimitive p in PrimitiveList) {
-            p.LoadShaderMatrix(ref mCombinedParentXform);
+        foreach (NodePrimitive prim in PrimitiveList) {
+            prim.LoadShaderMatrix(ref mCombinedParentXform);
         }
     }
 }
